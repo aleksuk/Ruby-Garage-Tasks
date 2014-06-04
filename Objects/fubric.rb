@@ -1,4 +1,4 @@
-class Fubric
+class Fabric
 
     def initialize(*args)
         @@keys = args
@@ -12,10 +12,12 @@ class Fubric
                 @@param = []
 
                 keys.each do |key|
-                    @@param << key
+                    if key.is_a?(Symbol)
+                        @@param << key
 
-                    singleton_class.class_eval do
-                        attr_accessor key
+                        singleton_class.class_eval do
+                            attr_accessor key
+                        end
                     end
                 end
 
@@ -50,7 +52,7 @@ class Fubric
     end
 end
 
-temp_obj = Fubric.new(:a, :b)
+temp_obj = Fabric.new(:a, :b)
 result = temp_obj.new(1, 2)
 
 p result.a
