@@ -110,7 +110,7 @@ class Library
     end
 
     top_books.sort! do |a, b|
-      a[0] <=> b[0]
+      b[0] <=> a[0]
     end
 
     top_books.take(3).map do |book|
