@@ -23,7 +23,6 @@ class Order
 end
 
 class Library
-  Top_visitor = 3
 
   def initialize
     @orders = []
