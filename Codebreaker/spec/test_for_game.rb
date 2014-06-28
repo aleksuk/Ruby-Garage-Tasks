@@ -64,23 +64,20 @@ describe Codebreaker::Game do
 
   end
 
-  it "gives you the opportunity to play again" do
+  context "#start" do
+    it "gives you the opportunity to play again" do
+      
+      game.instance_variable_set(:@random, [2, 6 ,6, 6])
 
-    expected_result = '-'
-    result = ''
-    arr = [1, 2, 3, 4]
+      (Codebreaker::Game::ATTEMPTS + 1).times {
+        game.submit_guesse [1, 2, 3, 4]
+      }
 
-    game.instance_variable_set(:@random, [2, 6 ,6, 6])
+      expect(game.instance_variable_get(:@attempts)).to eq(Codebreaker::Game::ATTEMPTS)
+      game.start
 
-    (Codebreaker::Game::ATTEMPTS + 1).times {
-      result = game.submit_guesse arr
-    }
-
-    expect(result).to eq(game.game_over)
-
-    game.start
-    game.instance_variable_set(:@random, [2, 6 ,6, 6])
-    expect(game.submit_guesse(arr)).to eq(expected_result)
+      expect(game.instance_variable_get(:@attempts)).to eq(0)
+    end
   end
 
   context "#get_a_clue" do
