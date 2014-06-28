@@ -48,7 +48,7 @@ describe Codebreaker::Game do
         expected_result = ''
         game.instance_variable_set(:@random, [1, 2, 3, 4])
 
-        6.times {
+        (Codebreaker::Game::ATTEMPTS + 1).times {
           expected_result = game.submit_guesse [3, 3, 3, 3]
         }
 
@@ -72,7 +72,7 @@ describe Codebreaker::Game do
 
     game.instance_variable_set(:@random, [2, 6 ,6, 6])
 
-    6.times {
+    (Codebreaker::Game::ATTEMPTS + 1).times {
       result = game.submit_guesse arr
     }
 
@@ -95,7 +95,23 @@ describe Codebreaker::Game do
 
       hint = game.get_a_clue
 
-      expect(default_arr.include?(hint)).to eq(true)
+      expect(game.instance_variable_get(:@random).include?(hint)).to eq(true)
+    end
+  end
+
+  context "#save_score" do
+    it "should save score" do
+
+      expect(game.instance_variable_get(:@score)).to receive(:save_score).with(kind_of(Hash))
+      game.save_score 'Some Name'
+    end
+  end
+
+  context "#get_result" do
+    it "should show last results" do
+
+      expect(game.instance_variable_get(:@score)).to receive(:get_score).with(no_args())
+      game.get_result
     end
   end
 end
