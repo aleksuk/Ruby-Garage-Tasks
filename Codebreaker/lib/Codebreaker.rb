@@ -59,13 +59,13 @@ module Codebreaker
       n + rand(m)
     end
 
-    def check_result *data
-      if !data[0]
+    def check_result data = nil
+      if !data
         game_over
-      elsif data[0] == '++++'
+      elsif data == '++++'
         you_win
       else
-        data[0]
+        data
       end
     end
 
